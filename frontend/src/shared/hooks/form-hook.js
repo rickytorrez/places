@@ -27,6 +27,11 @@ const formReducer = (state, action) => {
           },
           isValid: formIsValid,
         };
+        case 'SET_DATA':
+          return {
+            inputs: action.inputs,
+            isValid: action.formIsValid
+          }
       default:
         return state;
     }
@@ -50,13 +55,22 @@ export const useForm = (initialInputs, initialFormValidity) => {
   const inputHandler = useCallback((id, value, isValid) => {
     // disptaches an action type and value, isValid, inputId
     dispatch({
-        type: 'INPUT_CHANGE',
-        value: value,
-        isValid: isValid,
-        inputId: id,
+      type: 'INPUT_CHANGE',
+      value: value,
+      isValid: isValid,
+      inputId: id,
     });
     // takes an array of dependencies to re-render the function
   }, []);
-    // returns the formState and inputHandler to access the useForm hook from the components where it's imported
-    return [formState, inputHandler]
+
+  const setFormData = useCallback((inputData, formValidity) => {
+    dispatch({
+      type: 'SET_DATA',
+      inputs: inputData,
+      formIsValid: formValidity
+    });
+  }, []);
+
+  // returns the formState and inputHandler to access the useForm hook from the components where it's imported
+  return [formState, inputHandler, setFormData];
 }
