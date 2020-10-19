@@ -26,8 +26,8 @@ const Input = (props) => {
   // inputState is the initial state
   // dispatch lets us run actions to the reducer funcion which in turn updates the inputState
   const [inputState, dispatch] = useReducer(inputReducer, {
-    value: props.value || '',
-    isValid: props.valid || false,
+    value: props.initialValue || '',
+    isValid: props.initialIsValid || false,
     isTouched: false,
   });
 

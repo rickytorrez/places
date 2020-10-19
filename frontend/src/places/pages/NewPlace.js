@@ -1,42 +1,17 @@
-import React, { useCallback, useReducer } from 'react';
+import React from 'react';
 
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
+import { useForm } from '../../shared/hooks/form-hook';
 import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
 } from '../../shared/components/util/validators';
 import './PlaceForm.css';
 
-const formReducer = (state, action) => {
-  switch (action.type) {
-    case 'INPUT_CHANGE':
-      let formIsValid = true;
-      for (const inputId in state.inputs) {
-        // if check to see if the input we're looking at is the input being updated in the current action
-        if (inputId === action.inputId) {
-          formIsValid = formIsValid && action.isValid;
-          // looking at an input in the form state which is not currently getting updated through the currently running action
-        } else {
-          formIsValid = formIsValid && state.inputs[inputId].isValid;
-        }
-      }
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          [action.inputId]: { value: action.value, isValid: action.isValid },
-        },
-        isValid: formIsValid,
-      };
-    default:
-      return state;
-  }
-};
-
 const NewPlace = () => {
-  const [formState, dispatch] = useReducer(formReducer, {
-    inputs: {
+
+  const [formState, inputHandler] = useForm({
       title: {
         value: '',
         isValid: false,
@@ -49,22 +24,11 @@ const NewPlace = () => {
         value: '',
         isValid: false,
       },
-    },
-    isValid: false,
-  });
-
-  const inputHandler = useCallback((id, value, isValid) => {
-    dispatch({
-      type: 'INPUT_CHANGE',
-      value: value,
-      isValid: isValid,
-      inputId: id,
-    });
-  }, []);
+    },false);
 
   const placeSubmitHandler = (event) => {
     event.preventDefault();
-    // @TODO -> sent the request to the backend
+    // @TODO -> send the request to the backend
     console.log(formState.inputs);
   };
 
