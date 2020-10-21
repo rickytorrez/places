@@ -9,6 +9,8 @@ import './PlaceItem.css';
 const PlaceItem = (props) => {
   const [showMap, setShowMap] = useState(false);
 
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+
   const openMapHandler = () => {
     setShowMap(true);
   };
@@ -16,6 +18,8 @@ const PlaceItem = (props) => {
   const closeMapHandler = () => {
     setShowMap(false);
   };
+
+  const showDelte
 
   return (
     <React.Fragment>
@@ -30,6 +34,18 @@ const PlaceItem = (props) => {
         <div className='map-container'>
           <Map center={props.coordinates} zoom={16} />
         </div>
+      </Modal>
+      <Modal
+        header='Are you sure>'
+        footerClass='place-item__modal-actions'
+        footer={
+          <React.Fragment>
+            <Button inverse>CANCEL</Button>
+            <Button danger>DELETE</Button>
+          </React.Fragment>
+        }
+      >
+        <p>Do you want to proceed and delete this place? Please note that it can't be undone thereafter.</p>
       </Modal>
       <li className='place-item'>
         <Card className='place-item__content'>
