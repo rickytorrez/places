@@ -5,11 +5,14 @@ const formReducer = (state, action) => {
     // it switches on action type
   switch (action.type) {
       // only one case provided on this reducer
-      case 'INPUT_CHANGE':
-        // formIsValid is a helper variable that we use to check the validity of the overall form
-        let formIsValid = true;
-        // loop through the inputs object in the state
-        for (const inputId in state.inputs) {
+        case 'INPUT_CHANGE':
+          // formIsValid is a helper variable that we use to check the validity of the overall form
+          let formIsValid = true;
+          // loop through the inputs object in the state
+          for (const inputId in state.inputs) {
+            if (!state.inputs[inputId]){
+              continue;
+            }
           // if check to see if the input we're looking at is the input being updated in the current action
           if (inputId === action.inputId) {
             // if it is, form is Valid is equal to the validity of isValid and the current formIsValid value
