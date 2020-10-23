@@ -10,7 +10,9 @@ const formReducer = (state, action) => {
           let formIsValid = true;
           // loop through the inputs object in the state
           for (const inputId in state.inputs) {
+            // if the inputId is undefined, specially for name on the form switch
             if (!state.inputs[inputId]){
+              // continue on the app
               continue;
             }
           // if check to see if the input we're looking at is the input being updated in the current action
