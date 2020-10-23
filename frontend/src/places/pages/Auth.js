@@ -40,19 +40,26 @@ const Auth = (props) => {
     // this runs before we switch the mode
     // therefore => this is login mode
     if(!isLoginMode){
+      // in login mode, we need to drop the name field
       setFormData(
         {
+          // spread the inputs to make email and pw available
           ...formState.inputs,
+          // drop the name field
           name: undefined
         }, 
+        // validity of the form depends on the email and password validity
         formState.inputs.email.isValid && formState.inputs.password.isValid)
     } else {
       setFormData({
+        // retain the current inputs
         ...formState.inputs,
+        // create a new name input and set the value to an empty string and isValid to false
         name: {
           value: '',
           isValid: false
         }
+      // validity of the form is false
       }, false)
     }
 
