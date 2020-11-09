@@ -1,8 +1,7 @@
 const express = require("express");
+const { check } = require("express-validator");
 
 const placesControllers = require("../controllers/places-controller");
-
-const HttpError = require("../models/http-error");
 
 const router = express.Router();
 
@@ -14,17 +13,38 @@ router.get("/:pid", placesControllers.getPlaceById);
 // @route   GET api/places/user/:uid
 // @desc    gets places that belong to a single user by the user id
 // @access  Public
-router.get("/user/:uid", placesControllers.getPlaceByUserId);
+router.get("/user/:uid", placesControllers.getPlacesByUserId);
 
 // @route   POST api/places
 // @desc    creates a place
 // @access  Public for now, private in the future
-router.post("/", placesControllers.createPlace);
+router.post(
+  "/",
+  [
+    check("title")
+      .not()
+      .isEmpty(),
+    check("description").isLength({ min: 5 }),
+    check("address")
+      .not()
+      .isEmpty()
+  ],
+  placesControllers.createPlace
+);
 
 // @route   PATCH api/places/:pid
 // @desc    edits a place by its id
 // @access  Public for now, private in the future
-router.patch("/:pid", placesControllers.updatePlace);
+router.patch(
+  "/:pid",
+  [
+    check("title")
+      .not()
+      .isEmpty(),
+    check("description").isLength({ min: 5 })
+  ],
+  placesControllers.updatePlace
+);
 
 // @route   DELETE api/places/:pid
 // @desc    deletes a place by its id
