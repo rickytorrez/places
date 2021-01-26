@@ -6,9 +6,9 @@ const usersController = require("../controllers/users-controller");
 
 const router = express.Router();
 
-// @route   GET api/places/:id
+// @route   GET api/users/
 // @desc    gets users from database
-// @access  Public for now, private and only available for admin later
+// @access  Public
 router.get("/", usersController.getUsers);
 
 // @route   POST api/users/signup
@@ -28,7 +28,7 @@ router.post(
   usersController.signup
 );
 
-// @route   POST api/places/login
+// @route   POST api/users/login
 // @desc    login for user
 // @access  Public
 router.post("/login", usersController.login);
