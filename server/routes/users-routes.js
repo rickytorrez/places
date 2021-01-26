@@ -11,7 +11,7 @@ const router = express.Router();
 // @access  Public for now, private and only available for admin later
 router.get("/", usersController.getUsers);
 
-// @route   POST api/places/:id
+// @route   POST api/users/signup
 // @desc    signup for user
 // @access  Public
 router.post(
@@ -28,7 +28,7 @@ router.post(
   usersController.signup
 );
 
-// @route   POST api/places/:id
+// @route   POST api/places/login
 // @desc    login for user
 // @access  Public
 router.post("/login", usersController.login);
